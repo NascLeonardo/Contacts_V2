@@ -1,0 +1,93 @@
+@model IEnumerable<Contacts_V2.Models.Contact>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    List of contacts
+</p>
+
+<div class="form-group">
+    <label class="form-label">Search</label>
+    <div class="form-group">
+        <form action="Search" method="get">
+
+            <div class="input-group mb-3">
+                <input type="text" name="Sentence" class="form-control"
+                    placeholder="Name, Lastname, Email, Nickname, Phone, Birthday" aria-label="Search"
+                    aria-describedby="button-addon2">
+                <button class="btn btn-primary" type="submit" id="button-addon2">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<ul class="nav nav-tabs ">
+    <li class="nav-item mx-auto">
+        <a class="nav-link" data-bs-toggle="tab" href="#all">All</a>
+    </li>
+    <li class="nav-item mx-auto">
+        <a class="nav-link" data-bs-toggle="tab" href="#favorite">Favorites</a>
+    </li>
+    <li class="nav-item mx-auto">
+        <a class="nav-link" data-bs-toggle="tab" href="#personal">Personal</a>
+    </li>
+    <li class="nav-item mx-auto">
+        <a class="nav-link" data-bs-toggle="tab" href="#professional">Professional</a>
+    </li>
+
+</ul>
+
+<div id="myTabContent" class="tab-content ">
+    <!--All-->
+    <div class="tab-pane fade active show" id="all">
+        <div class="row">
+            <main class="row mx-auto col-12">
+                @foreach (var contact in Model)
+                {
+                    @await Html.PartialAsync("PartialContactCard", contact)                    
+                }
+            </main>
+        </div>
+    </div>
+
+    <!--Favorites-->
+    <div class="tab-pane fade" id="favorite">
+        <div class="row">
+            <main class="row mx-auto col-12 ">
+                @foreach (var contact in Model.Where(x => x.isFavorite))
+                {
+                    @await Html.PartialAsync("PartialContactCard", contact)                    
+                }
+            </main>
+        </div>
+    </div>
+
+    <!--Personal-->
+    <div class="tab-pane fade" id="personal">
+        <div class="row">
+            <main class="row mx-auto col-12 ">
+                @foreach (var contact in Model.Where(x => x.Type == "Personal"))
+                {
+                    @await Html.PartialAsync("PartialContactCard", contact)                    
+                }
+            </main>
+        </div>
+    </div>
+
+    <!--Professional-->
+    <div class="tab-pane fade" id="professional">
+        <div class="row">
+            <main class="row mx-auto col-12 ">
+                @foreach (var contact in Model.Where(x => x.Type == "Professional"))
+                {
+                    @await Html.PartialAsync("PartialContactCard", contact)                    
+                }
+            </main>
+        </div>
+    </div>
+
+
+</div>

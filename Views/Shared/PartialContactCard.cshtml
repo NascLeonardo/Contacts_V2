@@ -1,0 +1,74 @@
+@model Contacts_V2.Models.Contact
+
+@{
+var contact = Model;
+var collpase = $"collpase{contact.Id}";
+var heading = $"heading{contact.Id}";
+}
+
+<div class="accordion" id="accordionContato">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="@contact.Id">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#@collpase" aria-expanded="false" aria-controls="@collpase">
+                @Html.DisplayFor(modelItem => contact.Firstname) @Html.DisplayFor(modelItem =>
+                contact.Surname) <span>
+                    @if (contact.isFavorite)
+                    {
+
+                        <i class="fa-solid fa-star text-success"></i>
+                    }
+
+                </span>
+            </button>
+        </h2>
+        <div id="@collpase" class="accordion-collapse collapse" aria-labelledby="heading"
+            data-bs-parent="#accordionContato" style="">
+            <div class="accordion-body">
+                <div class="card-body m-0 p-0 border-dark ">
+
+                    <p class="card-subtitle text-muted">@Html.DisplayFor(modelItem => contact.Nickname)
+                        |
+                        @Html.DisplayFor(modelItem => contact.Type) </p>
+                    @if (contact.Phone != "" && contact.Phone != null)
+                    {
+                        <p class="card-text my-0">
+                            <i class="fas fa-phone"></i>: @Html.DisplayFor(modelItem => contact.Phone)
+                        </p>
+                    }
+
+                    @if (contact.Email != "" && contact.Email != null)
+                    {
+                        <p class="card-text my-0">
+                            <i class="fas fa-mail-bulk"></i>: @Html.DisplayFor(modelItem => contact.Email)
+                        </p>
+                    }
+                    @if (contact.Birthday != null  && contact.Birthday != null)
+                    {
+                        <p class="card-text my-0">
+                            <i class="fas fa-calendar"></i>: @contact.Birthday.Value.ToString("dd-MM-yyyy")
+                        </p>
+                    }
+
+
+
+                    <a href="/Contact/Delete/@contact.Id" class="card-link text-danger"><i
+                            class="fas fa-trash"></i></a>
+                    <a href="/Contact/Favorite/@contact.Id" class="card-link text-warning text-decoration-none">
+                        @if (contact.isFavorite)
+                        {
+                            <i class="fa fa-circle-xmark"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-star"></i>
+                        }
+
+                    </a>
+                    <a href="/Contact/Edit/@contact.Id" class="card-link text-warning"> <i class="fas fa-pen"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

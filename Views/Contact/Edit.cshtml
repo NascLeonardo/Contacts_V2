@@ -1,0 +1,71 @@
+@model Contacts_V2.Models.Contact
+@{
+    ViewData["Title"] = "Edit";
+    var date = Model.Birthday != null ? Model.Birthday.Value.ToString("yyyy-MM-dd").Trim() :null;
+    
+}
+
+<p>
+    Editing contact: @Model.Nickname
+</p>
+<div>
+
+    <div class="row">
+        <form asp-action="Edit" method="post" class="row col-12 col-md-6 mx-auto mx-md-0">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Nickname" value="@Model.Nickname" hidden/>
+            <input asp-for="Id" value="@Model.Id" hidden/>
+            <input asp-for="Type" value="@Model.Type" hidden/>
+            <input asp-for="isFavorite" value="@Model.isFavorite" hidden/>
+
+            <div class="form-group form-group input-group-sm col-12 col-md-6">
+                <label asp-for="Firstname" class="control-label"></label>
+                <input asp-for="Firstname" value="@Model.Firstname" class="form-control border-1"
+                    aria-describedby="helpFirstname" placeholder="Ex: Jon" />
+                <small id="helpFirstname" class="form-text text-muted">Contact's firstname</small>
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="form-group form-group input-group-sm col-12 col-md-6">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" value="@Model.Surname" class="form-control border-1"
+                    aria-describedby="helpSurname" placeholder="Ex: Doe" />
+                <small id="helpSurname" class="form-text text-muted">Contact's surname</small>
+                <span asp-validation-for="Surname" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group input-group-sm col-12">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" value="@Model.Email" class="form-control border-1" aria-describedby="helpEmail"
+                    placeholder="Ex: email@email.com" />
+                <small id="helpEmail" class="form-text text-muted">Contact's email.</small>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group input-group-sm col-12">
+                <label asp-for="Phone" class="control-label "></label>
+                <input id="Phone" value="@Model.Phone" asp-for="Phone" class="form-control border-1"
+                    aria-describedby="helpPhone" placeholder="Ex: (00) 01234-5678" />
+                <small id="helpPhone" class="form-text text-muted">Contact's phone</small>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+
+            </div>
+            <div class="form-group input-group-sm col-12">
+                <label asp-for="Birthday" class="control-label"></label>
+                <input type="date" value="@date" asp-for="Birthday" class="form-control border-1"
+                    aria-describedby="helpBirthday" />
+                <small id="helpBirthday" class="form-text text-muted">Contact's birthday</small>
+                <span asp-validation-for="Birthday" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid gap-2 col-12 mt-3">
+                <button type="submit" class="btn btn-primary" type="button">Save</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#Phone').inputmask('(99) 99999-9999');
+        });
+    </script>
+
+</div>
